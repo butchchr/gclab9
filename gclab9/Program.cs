@@ -28,65 +28,87 @@ namespace gclab8
                 {
                     Console.WriteLine("You picked add! Please Enter a name for your student:");
                     string newStudent = Console.ReadLine();
+                    if (IsNOW(newStudent))
+                    {
+                        students.Add(newStudent); 
+                    }
 
-                    Console.WriteLine("Assign them a favorite 'state - capital city'");
+                    Console.WriteLine("Assign them a favorite state - capital city");
                     string newState = Console.ReadLine();
+                    if (IsNOW(newState))
+                    {
+                        students.Add(newState);
+                    }
 
                     Console.WriteLine("Now they need a favorite '94-'95 Crayola Magic Scent crayon color:");
                     string newColor = Console.ReadLine();
+                    if (IsNOW(newColor))
+                    {
+                        color.Add(newColor);
+                    }
 
                     Console.WriteLine("Finally lets assign them a favorite random number");
                     string newNumber = Console.ReadLine();
+                    if (IsNOW(newNumber))
+                    {
+                        number.Add(newNumber);
+                    }
                 }
 
                 else if (IsAdd(learnOrAdd) == false)
                 {
-                        Console.WriteLine("This is the class of randomly generated students with randomly generated attributes." + "\n" + "Please enter 1-10 to learn about one of them!");
-                        string user = Console.ReadLine();
+                    Console.WriteLine("This is the class of randomly generated students with randomly generated attributes." + "\n" + "Please enter 1-10 to learn about one of them!");
+                    string user = Console.ReadLine();
 
-                        if (!IsInRange(user))
+                    if (!IsInRange(user))
+                    {
+                        int userInt = int.Parse(user);
+                        Console.WriteLine("You picked student " + students[userInt - 1] + "!" + "\n" + "Would you like to know their favorite State & Capital city or their favorite '94-'95 Crayola Magic Scent crayon color? or favorite number" + "\n" + "Please enter 'state' or 'color' or 'number' for more!");
+                        string userTwo = Console.ReadLine();
+
+                        if (IsState(userTwo))
                         {
-                            int userInt = int.Parse(user);
-                            Console.WriteLine("You picked student " + students[userInt - 1] + "!" + "\n" + "Would you like to know their favorite State & Capital city or their favorite '94-'95 Crayola Magic Scent crayon color? or favorite number" + "\n" + "Please enter 'state' or 'color' or 'number' for more!");
-                            string userTwo = Console.ReadLine();
-
-                            if (IsState(userTwo))
-                            {
-                                Console.WriteLine(state[userInt - 1]);
-                            }
-
-                            if (IsColor(userTwo))
-                            {
-                                Console.WriteLine(color[userInt - 1]);
-                            }
-
-                            if (IsNumber(userTwo))
-                            {
-                                Console.WriteLine(number[userInt - 1]);
-                            }
+                            Console.WriteLine(state[userInt - 1]);
                         }
+
+                        if (IsColor(userTwo))
+                        {
+                            Console.WriteLine(color[userInt - 1]);
+                        }
+
+                        if (IsNumber(userTwo))
+                        {
+                             Console.WriteLine(number[userInt - 1]);
+                        }
+                    }
                 }
             
-                    else
-                    {
-                        Console.WriteLine("Sorry Bud, that is an invaild input");
-                    }
+                else
+                {
+                    Console.WriteLine("Sorry Bud, that is an invaild input");
+                }
 
-                    //continue y/n
-                    bool invalid = true;
-                    while (invalid)
-                    {
-                        Console.WriteLine("Continue? (y/n):");
-                        ConsoleKeyInfo pressed = Console.ReadKey();
-                        Console.WriteLine();
-                        bool isY = pressed.Key == ConsoleKey.Y;
-                        bool isN = pressed.Key == ConsoleKey.N;
+                //continue y/n
+                bool invalid = true;
+                while (invalid)
+                {
+                   Console.WriteLine("Give it another go? (y/n):");
+                   ConsoleKeyInfo pressed = Console.ReadKey();
+                   Console.WriteLine();
+                   bool isY = pressed.Key == ConsoleKey.Y;
+                   bool isN = pressed.Key == ConsoleKey.N;
 
-                        invalid = !isY && !isN;
-                        y = isY;
-                    }
+                   invalid = !isY && !isN;
+                   y = isY;
+                }
                
             }
+        }
+
+        //method to check for null or white space
+        static bool IsNOW(string input)
+        {
+            return !string.IsNullOrWhiteSpace(input);
         }
 
         //Method to catch 0 and out of range
