@@ -12,16 +12,16 @@ namespace gclab8
     {
         static void Main(string[] args)
         {
-            List<string> students = new List<string> { "Natasha Allison", "Simon Schneider", "Kyle Silva", "Santiago Martin", "Gustavo Mcgee", "Ron Keller", "Meghan Burke", "Florence Carr", "Kari Frank", "Madeline Montgomery" };
-            List<string> state = new List<string> { "Montana - Helena", "Nebraska - Lincoln", "Nevada - Carson City", "New Hampshire - Concord", "New Jersey - Trenton", "New Mexico - Santa Fe", "New York - Albany", "North Carolina - Raleigh", "North Dakota - Bismarck", "Oklahoma - Oklahoma City" };
-            List<string> color = new List<string> { "BabyPowder", "Fresh Mowed Lawn", "Blueberry", "Bubble Gum", "Cedar Chest", "Cherry", "Grape Jelly Bean", "Leather Jacket", "Lemon", "Licorice" };
+            List<string> students = new List<string> { "Nat Allison", "Sam Smith", "Kyle Silva", "Santi Martin", "Gustavo Mcgee", "Ron Keel", "Meghan Burke", "Flo Carr", "Kari Frank", "Madi Mark"};
+            List<string> state = new List<string> { "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York ", "North Carolina", "North Dakota", "Oklahoma"};
+            List<string> color = new List<string> { "Baby Powder", "Lawn", "Blueberry", "Bubble Gum", "Cedar Chest", "Cherry", "Jelly Bean", "Leather Jacket", "Lemon", "Licorice"};
             List<string> number = new List<string> { "1.11", "2.27", "3.14", ".44", "51", "64", "762", "89", "96", "1 Billion" };
 
             bool y = true;
             while (y)
             {
                 //Read or add
-                Console.WriteLine("Welcome to the GC class of random students with random attributes, would you like to learn about one or add one to class?" + "\n" + "Enter 'learn' or 'add'");
+                Console.WriteLine("Welcome to the class of random students with random likes, would you like to learn about them or add one?" + "\n" + "Enter 'learn' or 'add'");
                 string learnOrAdd = Console.ReadLine();
 
                 if (IsAdd(learnOrAdd) == true)
@@ -33,7 +33,7 @@ namespace gclab8
                         students.Add(newStudent); 
                     }
 
-                    Console.WriteLine("Assign them a favorite state - capital city");
+                    Console.WriteLine("Assign them a favorite state");
                     string newState = Console.ReadLine();
                     if (IsNOW(newState))
                     {
@@ -53,11 +53,18 @@ namespace gclab8
                     {
                         number.Add(newNumber);
                     }
+
+                    Console.WriteLine($"You entered student {newStudent}");
+                    Console.WriteLine($"They are Student Number {students.Count-1}");
+                    Console.WriteLine($"Their favorite state and capital is {newState}");
+                    Console.WriteLine($"Their favorite color is {newColor}");
+                    Console.WriteLine($"Their favorite number is {newNumber}");
+                    Console.WriteLine("Thank you for adding to our random class");
                 }
 
                 else if (IsAdd(learnOrAdd) == false)
                 {
-                    Console.WriteLine("This is the class of randomly generated students with randomly generated attributes." + "\n" + "Please enter 1-10 to learn about one of them!");
+                    Console.WriteLine($"This is the classroom of randoms." + "\n" + "Please enter 1-{students.count-1} to learn about one of them!");
                     string user = Console.ReadLine();
 
                     if (!IsInRange(user))
@@ -100,8 +107,7 @@ namespace gclab8
 
                    invalid = !isY && !isN;
                    y = isY;
-                }
-               
+                }       
             }
         }
 
@@ -114,11 +120,13 @@ namespace gclab8
         //Method to catch 0 and out of range
         static bool IsInRange(string word)
         {
+
             if (!string.IsNullOrWhiteSpace(word))
             {
+                
                 int num;
                 int.TryParse(word, out num);
-                if (num > 0 && num <= 10)
+                if (num > 0 && num <= 11)
                 {
                     return false;
                 }
