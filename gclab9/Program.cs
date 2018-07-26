@@ -26,45 +26,13 @@ namespace gclab8
 
                 if (IsAdd(learnOrAdd))
                 {
-                    Console.WriteLine("You picked add! Please Enter a name for your student:");
-                    string newStudent;
-                    do
-                    {
-                        newStudent = Console.ReadLine();
-                    }
-                    while (string.IsNullOrWhiteSpace(newStudent));
+                    string newStudent = PromptAndAdd(students, "You picked add! Please Enter a name for your student:");
 
-                    students.Add(newStudent);
+                    string newState = PromptAndAdd(state,"Assign them a favorite state");
                     
-                    Console.WriteLine("Assign them a favorite state");
-                    string newState;
-                    do
-                    {
-                        newState = Console.ReadLine();
-                    }
-                    while (string.IsNullOrWhiteSpace(newState));
+                    string newColor = PromptAndAdd(color, "Now they need a favorite '94-'95 Crayola Magic Scent crayon color:");
 
-                    state.Add(newState);
-                    
-                    Console.WriteLine("Now they need a favorite '94-'95 Crayola Magic Scent crayon color:");
-                    string newColor;
-                    do
-                    {
-                        newColor = Console.ReadLine();
-                    }
-                    while (string.IsNullOrWhiteSpace(newColor));
-
-                    color.Add(newColor);
-                    
-                    Console.WriteLine("Finally lets assign them a favorite random number");
-                    string newNumber;
-                    do
-                    {
-                        newNumber = Console.ReadLine();
-                    }
-                    while (string.IsNullOrWhiteSpace(newNumber));
-                    
-                    number.Add(newNumber);
+                    string newNumber = PromptAndAdd(number, "Finally lets assign them a favorite random number");
                     
                     Console.WriteLine($"You entered student {newStudent}");
                     Console.WriteLine($"They are Student Number {students.Count}");
@@ -163,6 +131,21 @@ namespace gclab8
         static bool IsLearn(string input)
         {
             return IsWords(input, "learn");
+        }
+        
+        //prompt user for valid input and adds it to the list
+        static string PromptAndAdd(List<string> items, string prompt)
+        { 
+            string item;
+            do
+            {
+                Console.WriteLine(prompt);
+                item = Console.ReadLine();
+            }
+            while (string.IsNullOrWhiteSpace(item));
+
+            items.Add(item);
+            return item; 
         }
     }
 }
