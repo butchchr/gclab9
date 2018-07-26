@@ -27,52 +27,63 @@ namespace gclab8
                 if (IsAdd(learnOrAdd))
                 {
                     Console.WriteLine("You picked add! Please Enter a name for your student:");
-                    string newStudent = Console.ReadLine();
-                    if (IsNOW(newStudent))
+                    string newStudent;
+                    do
                     {
-                        students.Add(newStudent);
+                        newStudent = Console.ReadLine();
                     }
+                    while (string.IsNullOrWhiteSpace(newStudent));
 
+                    students.Add(newStudent);
+                    
                     Console.WriteLine("Assign them a favorite state");
-                    string newState = Console.ReadLine();
-                    if (IsNOW(newState))
+                    string newState;
+                    do
                     {
-                        state.Add(newState);
+                        newState = Console.ReadLine();
                     }
+                    while (string.IsNullOrWhiteSpace(newState));
 
+                    state.Add(newState);
+                    
                     Console.WriteLine("Now they need a favorite '94-'95 Crayola Magic Scent crayon color:");
-                    string newColor = Console.ReadLine();
-                    if (IsNOW(newColor))
+                    string newColor;
+                    do
                     {
-                        color.Add(newColor);
+                        newColor = Console.ReadLine();
                     }
+                    while (string.IsNullOrWhiteSpace(newColor));
 
+                    color.Add(newColor);
+                    
                     Console.WriteLine("Finally lets assign them a favorite random number");
-                    string newNumber = Console.ReadLine();
-                    if (IsNOW(newNumber))
+                    string newNumber;
+                    do
                     {
-                        number.Add(newNumber);
+                        newNumber = Console.ReadLine();
                     }
-
+                    while (string.IsNullOrWhiteSpace(newNumber));
+                    
+                    number.Add(newNumber);
+                    
                     Console.WriteLine($"You entered student {newStudent}");
-                    Console.WriteLine($"They are Student Number {students.Count - 1}");
+                    Console.WriteLine($"They are Student Number {students.Count}");
                     Console.WriteLine($"Their favorite state and capital is {newState}");
                     Console.WriteLine($"Their favorite color is {newColor}");
                     Console.WriteLine($"Their favorite number is {newNumber}");
                     Console.WriteLine("Thank you for adding to our random class");
                 }
-
-                else if (!IsAdd(learnOrAdd))
+                else if (IsLearn(learnOrAdd))
                 {
-                    Console.WriteLine($"This is the classroom of randoms.\nPlease enter 1 - {students.Count - 1} to learn about one of them!");
+                    Console.WriteLine($"This is the classroom of randoms.\nPlease enter 1 - {students.Count} to learn about one of them!");
                     string user = Console.ReadLine();
 
                     int userInt;
                     bool num1 = int.TryParse(user, out userInt);
 
-                    if (!IsInRange(userInt, students.Count))
+                    if (IsInRange(userInt, students.Count))
                     {
-                        Console.WriteLine($"You picked student {students[userInt - 1]}!\nWould you like to know their favorite State & Capital city or their favorite '94-'95 Crayola Magic Scent crayon color? or favorite number\nPlease enter 'state' or 'color' or 'number' for more!");
+                        Console.WriteLine($"You picked student {students[userInt - 1]}!\nWould you like to know their favorite State or their favorite '94-'95 Crayola Magic Scent crayon color? or favorite number\nPlease enter 'state' or 'color' or 'number' for more!");
                         string userTwo = Console.ReadLine();
 
                         if (IsState(userTwo))
@@ -91,7 +102,6 @@ namespace gclab8
                         }
                     }
                 }
-
                 else
                 {
                     Console.WriteLine("Sorry Bud, that is an invaild input");
@@ -113,23 +123,18 @@ namespace gclab8
             }
         }
 
-        //method to check for null or white space
-        static bool IsNOW(string input)
-        {
-            return !string.IsNullOrWhiteSpace(input);
-        }
-
         //Method to catch 0 and out of range
         static bool IsInRange(int num, int studentLength)
         {
             return num > 0 && num <= studentLength;
         }
 
+        //checks to see if two values are equal 
         static bool IsWords(string input1, string input2)
         {
             return input1.ToLower() == input2.ToLower();
         }
-        
+
         //did user enter requested text "state"
         static bool IsState(string input)
         {
@@ -148,10 +153,16 @@ namespace gclab8
             return IsWords(input, "number");
         }
 
-        //did user enter "add" or "learn"
+        //did user enter "add"
         static bool IsAdd(string input)
         {
             return IsWords(input, "add");
+        }
+
+        //did user enter "learn"
+        static bool IsLearn(string input)
+        {
+            return IsWords(input, "learn");
         }
     }
 }
