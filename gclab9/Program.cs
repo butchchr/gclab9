@@ -12,32 +12,32 @@ namespace gclab8
     {
         static void Main(string[] args)
         {
-            List<string> students = new List<string> { "Nat Allison", "Sam Smith", "Kyle Silva", "Santi Martin", "Gustavo Mcgee", "Ron Keel", "Meghan Burke", "Flo Carr", "Kari Frank", "Madi Mark"};
-            List<string> state = new List<string> { "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York ", "North Carolina", "North Dakota", "Oklahoma"};
-            List<string> color = new List<string> { "Baby Powder", "Lawn", "Blueberry", "Bubble Gum", "Cedar Chest", "Cherry", "Jelly Bean", "Leather Jacket", "Lemon", "Licorice"};
+            List<string> students = new List<string> { "Nat Allison", "Sam Smith", "Kyle Silva", "Santi Martin", "Gustavo Mcgee", "Ron Keel", "Meghan Burke", "Flo Carr", "Kari Frank", "Madi Mark" };
+            List<string> state = new List<string> { "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York ", "North Carolina", "North Dakota", "Oklahoma" };
+            List<string> color = new List<string> { "Baby Powder", "Lawn", "Blueberry", "Bubble Gum", "Cedar Chest", "Cherry", "Jelly Bean", "Leather Jacket", "Lemon", "Licorice" };
             List<string> number = new List<string> { "1.11", "2.27", "3.14", ".44", "51", "64", "762", "89", "96", "1 Billion" };
 
             bool y = true;
             while (y)
             {
                 //Read or add
-                Console.WriteLine("Welcome to the class of random students with random likes, would you like to learn about them or add one?" + "\n" + "Enter 'learn' or 'add'");
+                Console.WriteLine("Welcome to the class of random students with random likes, would you like to learn about them or add one?\nEnter 'learn' or 'add'");
                 string learnOrAdd = Console.ReadLine();
 
-                if (IsAdd(learnOrAdd) == true)
+                if (IsAdd(learnOrAdd))
                 {
                     Console.WriteLine("You picked add! Please Enter a name for your student:");
                     string newStudent = Console.ReadLine();
                     if (IsNOW(newStudent))
                     {
-                        students.Add(newStudent); 
+                        students.Add(newStudent);
                     }
 
                     Console.WriteLine("Assign them a favorite state");
                     string newState = Console.ReadLine();
                     if (IsNOW(newState))
                     {
-                        students.Add(newState);
+                        state.Add(newState);
                     }
 
                     Console.WriteLine("Now they need a favorite '94-'95 Crayola Magic Scent crayon color:");
@@ -55,22 +55,24 @@ namespace gclab8
                     }
 
                     Console.WriteLine($"You entered student {newStudent}");
-                    Console.WriteLine($"They are Student Number {students.Count-1}");
+                    Console.WriteLine($"They are Student Number {students.Count - 1}");
                     Console.WriteLine($"Their favorite state and capital is {newState}");
                     Console.WriteLine($"Their favorite color is {newColor}");
                     Console.WriteLine($"Their favorite number is {newNumber}");
                     Console.WriteLine("Thank you for adding to our random class");
                 }
 
-                else if (IsAdd(learnOrAdd) == false)
+                else if (!IsAdd(learnOrAdd))
                 {
-                    Console.WriteLine($"This is the classroom of randoms." + "\n" + "Please enter 1-{students.count-1} to learn about one of them!");
+                    Console.WriteLine($"This is the classroom of randoms.\nPlease enter 1 - {students.Count - 1} to learn about one of them!");
                     string user = Console.ReadLine();
 
-                    if (!IsInRange(user))
+                    int userInt;
+                    bool num1 = int.TryParse(user, out userInt);
+
+                    if (!IsInRange(userInt, students.Count))
                     {
-                        int userInt = int.Parse(user);
-                        Console.WriteLine("You picked student " + students[userInt - 1] + "!" + "\n" + "Would you like to know their favorite State & Capital city or their favorite '94-'95 Crayola Magic Scent crayon color? or favorite number" + "\n" + "Please enter 'state' or 'color' or 'number' for more!");
+                        Console.WriteLine($"You picked student {students[userInt - 1]}!\nWould you like to know their favorite State & Capital city or their favorite '94-'95 Crayola Magic Scent crayon color? or favorite number\nPlease enter 'state' or 'color' or 'number' for more!");
                         string userTwo = Console.ReadLine();
 
                         if (IsState(userTwo))
@@ -85,11 +87,11 @@ namespace gclab8
 
                         if (IsNumber(userTwo))
                         {
-                             Console.WriteLine(number[userInt - 1]);
+                            Console.WriteLine(number[userInt - 1]);
                         }
                     }
                 }
-            
+
                 else
                 {
                     Console.WriteLine("Sorry Bud, that is an invaild input");
@@ -99,15 +101,15 @@ namespace gclab8
                 bool invalid = true;
                 while (invalid)
                 {
-                   Console.WriteLine("Give it another go? (y/n):");
-                   ConsoleKeyInfo pressed = Console.ReadKey();
-                   Console.WriteLine();
-                   bool isY = pressed.Key == ConsoleKey.Y;
-                   bool isN = pressed.Key == ConsoleKey.N;
+                    Console.WriteLine("Give it another go? (y/n):");
+                    ConsoleKeyInfo pressed = Console.ReadKey();
+                    Console.WriteLine();
+                    bool isY = pressed.Key == ConsoleKey.Y;
+                    bool isN = pressed.Key == ConsoleKey.N;
 
-                   invalid = !isY && !isN;
-                   y = isY;
-                }       
+                    invalid = !isY && !isN;
+                    y = isY;
+                }
             }
         }
 
@@ -118,63 +120,38 @@ namespace gclab8
         }
 
         //Method to catch 0 and out of range
-        static bool IsInRange(string word)
+        static bool IsInRange(int num, int studentLength)
         {
-
-            if (!string.IsNullOrWhiteSpace(word))
-            {
-                
-                int num;
-                int.TryParse(word, out num);
-                if (num > 0 && num <= 11)
-                {
-                    return false;
-                }
-            }
-            return true;
+            return num > 0 && num <= studentLength;
         }
 
+        static bool IsWords(string input1, string input2)
+        {
+            return input1.ToLower() == input2.ToLower();
+        }
+        
         //did user enter requested text "state"
         static bool IsState(string input)
         {
-            string lower = input.ToLower();
-            if (lower == "state")
-            {
-                return true;
-            }
-            return false;
+            return IsWords(input, "state");
         }
 
         //did user enter requested text "color"
         static bool IsColor(string input)
         {
-            string lower = input.ToLower();
-            if (lower == "color")
-            {
-                return true;
-            }
-            return false;
+            return IsWords(input, "color");
         }
 
-        //did user enter requested text "color"
+        //did user enter requested text "number"
         static bool IsNumber(string input)
         {
-            string lower = input.ToLower();
-            if (lower == "number")
-            {
-                return true;
-            }
-            return false;
+            return IsWords(input, "number");
         }
 
-        static bool IsAdd (string input)
+        //did user enter "add" or "learn"
+        static bool IsAdd(string input)
         {
-            string lower = input.ToLower();
-            if (lower == "add")
-            {
-                return true;
-            }
-            return false;
+            return IsWords(input, "add");
         }
     }
 }
